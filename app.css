@@ -14,6 +14,7 @@
 }
 
 .player_schedule_input .daybox{
+  cursor: pointer;
   background: rgb(143, 163, 184);
   margin-block: 0;
   padding-block: 1rem;
