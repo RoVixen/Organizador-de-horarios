@@ -1,3 +1,6 @@
+
+@import url("./css/player_input.css");
+
 .nohl {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -6,33 +9,4 @@
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
-}
-
-.player_schedule_input{
-  display: grid;
-  grid-template-columns: repeat(7,1fr); 
-}
-
-.player_schedule_input .daybox{
-  cursor: pointer;
-  background: rgb(143, 163, 184);
-  margin-block: 0;
-  padding-block: 1rem;
-}
-.player_schedule_input .daybox:nth-child(odd){
-  background: slategrey;
-}
-
-
-.player_schedule_input .hourbox{
-  cursor: pointer;
-  background: rgb(190, 190, 190);
-  padding-inline: 1rem;
-  padding-block: 0.2rem;
-}
-.player_schedule_input .hourbox:nth-child(odd){
-  background: rgb(143, 143, 143);
-}
-.player_schedule_input .hourbox[selected="t"]{
-  background: greenyellow;
 }
