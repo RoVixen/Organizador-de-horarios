@@ -79,7 +79,25 @@ function PlayerInput(events={onAccept:()=>{},onCancel:()=>{}}){
 
     //funcion que recopila todos los datos y los devuelve en un objeto
     function gatherData(){
+      let toReturn={}
 
+      weekDays.forEach((dayName,dayIndex)=>{
+
+        //al final de todo esto, quedata una lista con el texto de la hora
+        const selectedHoursOfThisDay=Array.from(document
+        .querySelectorAll(`#${thisId} #hourbox[weekday="${dayIndex}"][selected="t"]`))
+        .map((selectedHour)=>selectedHour.getAttribute("hour"))
+        
+        if(selectedHoursOfThisDay.length==0)
+        return
+
+        if(selectedHoursOfThisDay.length==24)
+        return toReturn[dayName]=true;
+
+        toReturn[dayName]=selectedHoursOfThisDay;
+      })
+
+      return toReturn
     }
 
     //el boton aceptar envia un json a travez de la funcion onAccept
