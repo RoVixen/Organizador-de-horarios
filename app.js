@@ -1,4 +1,6 @@
-document.getElementById("root").innerHTML=PlayerInput({
+document.getElementById("root").innerHTML=PlayerTracker();
+
+/* document.getElementById("root").innerHTML=PlayerInput({
   onAccept:(data)=>{
     console.log(data)
   },
@@ -21,4 +23,4 @@ document.getElementById("root").innerHTML=PlayerInput({
     ],
     Miercoles:true,
   }
-});
+}); */

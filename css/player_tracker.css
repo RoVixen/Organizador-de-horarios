@@ -1,0 +1,14 @@
+.player_tracker{
+  display: flex;
+  width: 100%;
+}
+
+.player_tracker #players{
+  max-width: 20%;
+  background: #e0c6c6;
+}
+
+.player_tracker #adding_player{
+  max-width: 80%;
+  background: #d39b9b;
+}
