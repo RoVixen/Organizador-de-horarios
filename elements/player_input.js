@@ -99,7 +99,7 @@ function PlayerInput(props={
 
       weekDays.forEach((dayName,dayIndex)=>{
 
-        //al final de todo esto, quedata una lista con el texto de la hora
+        //al final de todo esto, quedara una lista con los textos de las horas seleccionadas
         const selectedHoursOfThisDay=Array.from(document
         .querySelectorAll(`#${thisId} #hourbox[weekday="${dayIndex}"][selected="t"]`))
         .map((selectedHour)=>selectedHour.getAttribute("hour"))
