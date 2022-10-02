@@ -72,6 +72,7 @@ function PlayerInput(events={onAccept:()=>{},onCancel:()=>{}}){
       daybox.addEventListener("click",(e)=>{
         const areAllSelected=thisDaysHours.every((hour)=>hour.getAttribute("selected")=="t")
 
+        //si todas estan seleccionadas, todas se pasan a deselecionadas, de lo contrario se seleccionan todas
         thisDaysHours.forEach((hour)=>hour.setAttribute("selected",!areAllSelected&&"t"||"f"))
       })
     })
