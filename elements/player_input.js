@@ -76,8 +76,25 @@ function PlayerInput(events={onAccept:()=>{},onCancel:()=>{}}){
         thisDaysHours.forEach((hour)=>hour.setAttribute("selected",!areAllSelected&&"t"||"f"))
       })
     })
+
+    //funcion que recopila todos los datos y los devuelve en un objeto
+    function gatherData(){
+
+    }
+
+    //el boton aceptar envia un json a travez de la funcion onAccept
+    document.querySelector(`#${thisId} #aceptar`).addEventListener("click",()=>{
+      onAccept(gatherData())
+    })
+    
+    //lo mismo que aceptar, pero en cancelar
+    document.querySelector(`#${thisId} #cancelar`).addEventListener("click",()=>{
+      onCancel(gatherData())
+    })
+
   },1)
 
+  //este elemento genera 7 recuadros de hora, uno por cada dia
   function DaysRow(hour){
     return Array(7)
     .fill("")
@@ -98,8 +115,8 @@ function PlayerInput(events={onAccept:()=>{},onCancel:()=>{}}){
       Array(12).fill("").map((_,ind)=>DaysRow((ind+1)+" AM")).join("")+
       Array(12).fill("").map((_,ind)=>DaysRow((ind+1)+" PM")).join("")
     }
-    <input type="button" value="Aceptar"/>
-    <input type="button" value="Cancelar"/>
+    <input id="aceptar" type="button" value="Aceptar"/>
+    <input id="cancelar" type="button" value="Cancelar"/>
   </div>
   `
 }
