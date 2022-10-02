@@ -8,6 +8,8 @@ const weekDays=[
   "Domingo",
 ]
 
+var elementCount_PlayerInput=0;
+
 function PlayerInput(props={
   onAccept:()=>{},
   onCancel:()=>{},
@@ -25,7 +27,8 @@ function PlayerInput(props={
 
   const {onAccept,onCancel,defaultSelecteds} = props
 
-  const thisId="PlayerInput_"+Math.floor(Math.random()*1000)
+  const thisId="PlayerInput_"+elementCount_PlayerInput;
+  elementCount_PlayerInput++;
 
   //despues de colocarse este texto, declarar los eventos
   setTimeout(()=>{
