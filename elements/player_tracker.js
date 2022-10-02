@@ -32,7 +32,7 @@ function PlayerTracker(props={}){
       //tiempo libre a la semana que tiene el jugador
       const percentTimeAviable=Math.floor(100*(timeAviable/168))+"%"
 
-      return `<h1>${nombre} (libre ${percentTimeAviable} del tiempo)</h1>`
+      return `<h1 class="nohl">${nombre} (libre ${percentTimeAviable} del tiempo)</h1>`
     })
     .join("")
   }

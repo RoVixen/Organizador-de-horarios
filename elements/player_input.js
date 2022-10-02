@@ -168,13 +168,15 @@ function PlayerInput(props={
   }
 
   return `<div id="${thisId}" class="player_schedule_input nohl">
+    <div id="actions">
+      <input id="aceptar" type="button" value="Aceptar"/>
+      <input id="cancelar" type="button" value="Cancelar"/>
+    </div>
     ${weekDays.map((day,ind)=>`<h2 id="daybox" day="${ind}" class="daybox">${day}</h2>`).join("")}
     ${
       TwelveHoursSet("AM")+
       TwelveHoursSet("PM")
     }
-    <input id="aceptar" type="button" value="Aceptar"/>
-    <input id="cancelar" type="button" value="Cancelar"/>
   </div>
   `
 }
