@@ -8,13 +8,26 @@ const weekDays=[
   "Domingo",
 ]
 
-function PlayerInput(events={onAccept:()=>{},onCancel:()=>{}}){
+function PlayerInput(props={
+  onAccept:()=>{},
+  onCancel:()=>{},
+  defaultSelecteds:{
+    Lunes:[],
+    Martes:[],
+    Miercoles:[],
+    Jueves:[],
+    Lunes:[],
+    Viernes:[],
+    Sabado:[],
+    Domingo:[],
+  }
+}){
 
-  const {onAccept,onCancel} = events
+  const {onAccept,onCancel,defaultSelecteds} = props
 
   const thisId="PlayerInput_"+Math.floor(Math.random()*1000)
 
-  //after render set click event
+  //despues de colocarse este texto, declarar los eventos
   setTimeout(()=>{
 
     //estas 2 variables se usaran mas tarde para la seleccion por arrastre
@@ -114,24 +127,48 @@ function PlayerInput(events={onAccept:()=>{},onCancel:()=>{}}){
 
   //este elemento genera 7 recuadros de hora, uno por cada dia
   function DaysRow(hour){
+
     return Array(7)
     .fill("")
-    .map((_,ind)=>`<div 
-      id="hourbox"
-      class="hourbox" 
-      weekday="${ind}" 
-      hour="${hour}"
-    >
-      <b>${hour}</b>
-    </div>`)
+    .map((_,weekDayIndex)=>{
+
+      let isSelected=false;
+    
+      if(defaultSelecteds){
+        if(defaultSelecteds[weekDays[weekDayIndex]]===true)
+        isSelected=true;
+
+        if(
+          Array.isArray(defaultSelecteds[weekDays[weekDayIndex]])&&
+          defaultSelecteds[weekDays[weekDayIndex]].includes(hour)
+        )
+        isSelected=true;
+      }
+
+      return `<div 
+        id="hourbox"
+        class="hourbox" 
+        weekday="${weekDayIndex}" 
+        hour="${hour}"
+        ${isSelected&&`selected="t"`||""}
+      >
+        <b>${hour}</b>
+      </div>`
+    })
+    .join("")
+  }
+
+  function TwelveHoursSet(amOrPM="AM"){
+    return Array(12).fill("")
+    .map((_,ind)=>DaysRow((ind+1)+" "+amOrPM))
     .join("")
   }
 
   return `<div id="${thisId}" class="player_schedule_input nohl">
     ${weekDays.map((day,ind)=>`<h2 id="daybox" day="${ind}" class="daybox">${day}</h2>`).join("")}
     ${
-      Array(12).fill("").map((_,ind)=>DaysRow((ind+1)+" AM")).join("")+
-      Array(12).fill("").map((_,ind)=>DaysRow((ind+1)+" PM")).join("")
+      TwelveHoursSet("AM")+
+      TwelveHoursSet("PM")
     }
     <input id="aceptar" type="button" value="Aceptar"/>
     <input id="cancelar" type="button" value="Cancelar"/>
