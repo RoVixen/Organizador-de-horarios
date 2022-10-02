@@ -7,6 +7,12 @@
   max-width: 20%;
   background: #e0c6c6;
 }
+.player_tracker #players button{
+  padding-block: 0.8rem;
+  padding-inline: 0.3rem;
+  min-width: 10rem;
+  font-size: 1.1rem;
+}
 
 .player_tracker #adding_player{
   max-width: 80%;

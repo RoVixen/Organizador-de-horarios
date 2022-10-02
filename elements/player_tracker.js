@@ -14,15 +14,23 @@ function PlayerTracker(props={}){
     
     addPlayerButton
     .addEventListener("click",(e)=>{
-      addingPlayer=!addingPlayer;
 
-      addPlayerButton.innerHTML=addingPlayer?"Cancelar":"Agregar Jugador"
+      function acceptHandler(playerFreeDays){
+        setAdding(false);
+      }
 
-      addPlayerElem.innerHTML=`${
-        addingPlayer&&(
-          `<input type="text" id="player_name"/>${PlayerInput()}`
-        )||""
-      }`
+      function setAdding(isAdding=false){
+        addingPlayer=isAdding;
+        addPlayerButton.innerHTML=isAdding?"Cancelar":"Agregar Jugador";
+        addPlayerElem.innerHTML=`${
+            addingPlayer&&(
+              `<input type="text" id="player_name"/>${PlayerInput({onAccept:acceptHandler})}`
+            )||""
+          }
+        `;
+      }
+
+      setAdding(!addingPlayer);
     })
 
   },1);
