@@ -72,7 +72,6 @@ function PlayerTracker(props={}){
 
       Object.entries(hoursObject).forEach(([hourName,matchesList])=>{
 
-        console.log(matchesList.every(isFree=>!!isFree))
         if(matchesList.every(isFree=>!!isFree))
         matchingSchedule[dayName].push(hourName)
       })
@@ -89,7 +88,13 @@ function PlayerTracker(props={}){
     const addPlayerElem=document.querySelector(`#${thisId} #adding_player`)
     const addPlayerButton=document.querySelector(`#${thisId} #players #actions #agregar`)
     const calculateButton=document.querySelector(`#${thisId} #players #actions #calcular`)
+
+    //addingPlayer y showingCalc son banderas globales que ayudan a comprender que esta renderizado ahora mismo
     
+    //se hacen funciones como las de setAdding y setShowingCalc para, ademas de cambiar las banderas
+    //actualizar el DOM  (tecnicamente renderizar) segun el valor de la bandera nueva
+    //ademas de que puedo llamar estas funciones en cualquier momento no solo al momento de
+
     function acceptHandler(playerFreeDays){
       const playerName=document.querySelector(`#${thisId} #adding_player input#player_name`).value
 
@@ -104,6 +109,7 @@ function PlayerTracker(props={}){
     }
 
     function setAdding(isAdding=false){
+      //para asegurar que no halla alguna confucion entre las banderas
       if(isAdding && showingCalc)setShowingCalc(false);
 
       addingPlayer=isAdding;
@@ -115,29 +121,24 @@ function PlayerTracker(props={}){
         }
       `;
     }
-
-    addPlayerButton.addEventListener("click",()=>setAdding(!addingPlayer));
     
     function setShowingCalc(isShowingCalc=false){
+      //para asegurar que no halla alguna confucion entre las banderas
       if(isShowingCalc && addingPlayer)setAdding(false);
 
       showingCalc=isShowingCalc;
       calculateButton.innerHTML=isShowingCalc?"Esconder calculo":"Calcular";
 
-      addPlayerElem.innerHTML=`${
-        showingCalc&&(
-          `<input type="text" id="player_name"/>${PlayerInput({
-              defaultSelecteds:calculateFreeMatchingTime(),
-              onAccept:()=>setShowingCalc(false),
-              onCancel:()=>setShowingCalc(false),
-            })}`
-          )||""
-        }
-      `;
+      addPlayerElem.innerHTML=showingCalc&&PlayerInput({
+        defaultSelecteds:calculateFreeMatchingTime(),
+        onAccept:()=>setShowingCalc(false),
+        onCancel:()=>setShowingCalc(false),
+      })||""
+      
     }
 
-    calculateButton
-    .addEventListener("click",e=>setShowingCalc(!showingCalc))
+    addPlayerButton.addEventListener("click",()=>setAdding(!addingPlayer));
+    calculateButton.addEventListener("click",e=>setShowingCalc(!showingCalc))
   },1);
 
   return `<div class="player_tracker" id="${thisId}">
