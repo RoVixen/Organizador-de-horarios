@@ -18,7 +18,6 @@ function PlayerTracker(props={}){
 
       //esta iteracion cuenta cuantas horas libres al dia tiene el jugador
       const timeAviable=Object.values(schedule).reduce((prev,schedList,index)=>{
-        console.log(Array.isArray(schedList),schedList)
         if(schedList===true)
         return prev+24;
 
@@ -37,10 +36,58 @@ function PlayerTracker(props={}){
     .join("")
   }
 
+  function calculateFreeMatchingTime(){
+
+    //esto genera un objeto inicial, para facilitar la programacion mas adelante al evitar verificar
+    let matchingTimes=weekDays.reduce((prev,current)=>{
+      prev[current]=dayHours.reduce((prev,hour)=>{
+        prev[hour]=[]
+        return prev
+      },{})
+      return prev
+    },{})
+
+    //esto recopila todas las horas libres de todos los jugadores en un enorme objeto
+    Object.entries(playersSchedules).forEach(([playerName,playerSched])=>{
+      weekDays.forEach((day,dayIndex)=>{
+
+        dayHours.forEach(hour=>{
+          if(!playerSched[day])
+          return matchingTimes[day][hour].push(false)
+          
+          if(playerSched[day]===true)
+          return matchingTimes[day][hour].push(false)
+          
+          matchingTimes[day][hour].push(playerSched[day].includes(hour))
+        })
+      })
+    })
+
+    let matchingSchedule={};
+
+    //esta seccion simplifica enormemente el proceso anterior, retornando un objeto compatible con PlayerInput
+    Object.entries(matchingTimes).forEach(([dayName,hoursObject])=>{
+      matchingSchedule[dayName]=[];
+
+      Object.entries(hoursObject).forEach(([hourName,matchesList])=>{
+
+        console.log(matchesList.every(isFree=>!!isFree))
+        if(matchesList.every(isFree=>!!isFree))
+        matchingSchedule[dayName].push(hourName)
+      })
+
+      if(matchingSchedule[dayName].length==0)
+      delete matchingSchedule[dayName]
+    })
+
+    return matchingSchedule;
+  }
+
   setTimeout(()=>{
 
     const addPlayerElem=document.querySelector(`#${thisId} #adding_player`)
     const addPlayerButton=document.querySelector(`#${thisId} #players #actions #agregar`)
+    const calculateButton=document.querySelector(`#${thisId} #players #actions #calcular`)
     
     addPlayerButton
     .addEventListener("click",(e)=>{
@@ -70,16 +117,20 @@ function PlayerTracker(props={}){
       }
 
       setAdding(!addingPlayer);
-    })
 
+    })
+    
+    calculateButton
+    .addEventListener("click",e=>calculateFreeMatchingTime())
   },1);
 
   return `<div class="player_tracker" id="${thisId}">
     <section id="players">
       <div id="actions" class="actions">
         <button id="agregar">Agregar Jugador</button>
-        <div id="player_list"></div>
+        <button id="calcular">Calcular</button>
       </div>
+      <div id="player_list"></div>
     </section>
     <section id="adding_player"></section>
   </div>`;
