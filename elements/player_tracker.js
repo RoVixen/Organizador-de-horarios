@@ -6,6 +6,7 @@ function PlayerTracker(props={}){
   elementCount_PlayerTracker++;
 
   let addingPlayer=false;
+  let showingCalc=false;
 
   let playersSchedules={};
 
@@ -89,39 +90,54 @@ function PlayerTracker(props={}){
     const addPlayerButton=document.querySelector(`#${thisId} #players #actions #agregar`)
     const calculateButton=document.querySelector(`#${thisId} #players #actions #calcular`)
     
-    addPlayerButton
-    .addEventListener("click",(e)=>{
+    function acceptHandler(playerFreeDays){
+      const playerName=document.querySelector(`#${thisId} #adding_player input#player_name`).value
 
-      function acceptHandler(playerFreeDays){
-        const playerName=document.querySelector(`#${thisId} #adding_player input#player_name`).value
+      if(playerName=="")
+      return alert("Colocale un nombre al jugador");
+      
+      playersSchedules[playerName]=playerFreeDays;
 
-        if(playerName=="")
-        return alert("Colocale un nombre al jugador");
-        
-        playersSchedules[playerName]=playerFreeDays;
+      renderPlayers();
+      
+      setAdding(false);
+    }
 
-        renderPlayers();
-        
-        setAdding(false);
-      }
+    function setAdding(isAdding=false){
+      if(isAdding && showingCalc)setShowingCalc(false);
 
-      function setAdding(isAdding=false){
-        addingPlayer=isAdding;
-        addPlayerButton.innerHTML=isAdding?"Cancelar":"Agregar Jugador";
-        addPlayerElem.innerHTML=`${
-            addingPlayer&&(
-              `<input type="text" id="player_name"/>${PlayerInput({onAccept:acceptHandler})}`
-            )||""
-          }
-        `;
-      }
+      addingPlayer=isAdding;
+      addPlayerButton.innerHTML=isAdding?"Cancelar":"Agregar Jugador";
+      addPlayerElem.innerHTML=`${
+          addingPlayer&&(
+            `<input type="text" id="player_name"/>${PlayerInput({onAccept:acceptHandler})}`
+          )||""
+        }
+      `;
+    }
 
-      setAdding(!addingPlayer);
-
-    })
+    addPlayerButton.addEventListener("click",()=>setAdding(!addingPlayer));
     
+    function setShowingCalc(isShowingCalc=false){
+      if(isShowingCalc && addingPlayer)setAdding(false);
+
+      showingCalc=isShowingCalc;
+      calculateButton.innerHTML=isShowingCalc?"Esconder calculo":"Calcular";
+
+      addPlayerElem.innerHTML=`${
+        showingCalc&&(
+          `<input type="text" id="player_name"/>${PlayerInput({
+              defaultSelecteds:calculateFreeMatchingTime(),
+              onAccept:()=>setShowingCalc(false),
+              onCancel:()=>setShowingCalc(false),
+            })}`
+          )||""
+        }
+      `;
+    }
+
     calculateButton
-    .addEventListener("click",e=>calculateFreeMatchingTime())
+    .addEventListener("click",e=>setShowingCalc(!showingCalc))
   },1);
 
   return `<div class="player_tracker" id="${thisId}">
