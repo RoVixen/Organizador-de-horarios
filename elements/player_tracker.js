@@ -116,7 +116,7 @@ function PlayerTracker(props={}){
       addPlayerButton.innerHTML=isAdding?"Cancelar":"Agregar Jugador";
       addPlayerElem.innerHTML=`${
           addingPlayer&&(
-            `<input type="text" id="player_name"/>${PlayerInput({onAccept:acceptHandler})}`
+            `<input type="text" id="player_name"/>${PlayerInput({onAccept:acceptHandler,onCancel:()=>setAdding(false)})}`
           )||""
         }
       `;
