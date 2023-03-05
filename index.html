@@ -1,19 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Player Scheduler</title>
-  
-  <script src="elements/player_input.js" defer></script>
-  <script src="elements/player_tracker.js" defer></script>
-  
-  <script src="app.js" defer></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="X-UA-Compatible"
+      content="IE=edge"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Player Scheduler</title>
 
-  <link rel="stylesheet" type="text/css" href="app.css" />
-</head>
-<body>
-  <div id="root"></div>
-</body>
+    <script
+      src="elements/player_input.js"
+      defer
+    ></script>
+    <script
+      src="elements/player_tracker.js"
+      defer
+    ></script>
+
+    <script
+      src="app.js"
+      defer
+    ></script>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="app.css"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <h3>Como usar:</h3>
+    <ul>
+      <li>
+        Puedes agregar "jugadores" con el boton "Agregar jugador, se desplegará
+        una vista para seleccionar sus horas libres
+      </li>
+      <li>
+        Selecciona las horas libres haciendoles click, estas se colocaran en
+        verde
+      </li>
+      <li>
+        Puedes mantener click y arrastrar el mouse sobre las horas para
+        seleccionar varios a la vez
+      </li>
+      <li>
+        Puedes mantener click y arrastrar el mouse sobre las horas ya
+        seleccionadas para deseleccionar las que ya seleccionaste
+      </li>
+      <li>
+        Puedes hacer click en el nombre del dia de la semana para seleccionar o
+        deseleccionar todas las horas
+      </li>
+      <li>
+        Cuando hallas terminado escribe el nombre de el jugador en la parte
+        superior
+      </li>
+      <li>
+        Cuando hallas terminado de agregar a todos los jugadores puedes darle al
+        boton "Calcular" para obtener un horario donde todos los jugadores estan
+        libres
+      </li>
+    </ul>
+
+    <h3>Sobre el proyecto:</h3>
+
+    <p>
+      Este proyecto lo hice en 2 dias, 2 horas por dia en javascript vanilla e
+      imitando un patron similar al de react, lo hice con vanilla por querer
+      probar mis propios conocimientos sobre javascript web vanilla pero en si,
+      para aplicaciones de esta indole con este tipo de logica compleja es mejor
+      utilizar algun framework como seria react o angular.
+    </p>
+    <p>
+      Este codigo esta publico en mi github
+      https://github.com/RoVixen/Organizador-de-horarios
+    </p>
+  </body>
 </html>
